@@ -34,7 +34,7 @@ if __name__ == '__main__':
     elif args.a == "strassen":
         result = algo.strassen(array1, array2, size1)
     elif args.a == "strassenSeuil":
-        result = algo.strassenSeuil(array1, array2, size1)
+        result = algo.strassen_threshold(array1, array2, size1)
     end_time = perf_counter()
 
     if args.p:
