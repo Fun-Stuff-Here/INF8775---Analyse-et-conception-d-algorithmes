@@ -31,6 +31,10 @@ if __name__ == '__main__':
     start_time = perf_counter()
     if args.a == "conv":
         result = algo.conv(array1, array2, size1)
+    elif args.a == "strassen":
+        result = algo.strassen(array1, array2, size1)
+    elif args.a == "strassenSeuil":
+        result = algo.strassenSeuil(array1, array2, size1)
     end_time = perf_counter()
 
     if args.p:

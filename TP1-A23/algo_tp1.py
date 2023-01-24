@@ -15,5 +15,15 @@ def conv(mat1, mat2, size):
         matRes = np.insert(matRes, iColMat1, lineRes)
     
     return matRes
-        
 
+
+
+
+
+
+def strassen(mat1, mat2, size):
+    return np.ones([size,size])
+
+
+def strassenSeuil(mat1, mat2, size, seuil=1):
+    return np.ones([size,size])
