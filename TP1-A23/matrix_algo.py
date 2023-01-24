@@ -21,10 +21,10 @@ if __name__ == '__main__':
         args.t = True
 
     with open(args.e1, 'r') as f:
-        size1 = int(f.readline())
+        size1 = 2**int(f.readline())
         array1 = np.loadtxt(f, dtype=int)
     with open(args.e2, 'r') as f:
-        size2 = int(f.readline())
+        size2 = 2**int(f.readline())
         array2 = np.loadtxt(f, dtype=int)
     
 
