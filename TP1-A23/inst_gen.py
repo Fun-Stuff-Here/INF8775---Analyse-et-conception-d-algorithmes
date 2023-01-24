@@ -24,6 +24,7 @@
 
 import random
 import argparse
+import os
 
 if __name__ == "__main__":
     # Parse arguments
@@ -51,7 +52,8 @@ if __name__ == "__main__":
     # Generate
     for i in range(nb_exemplaires):
         for j in range(taille_min, taille_min+nb_tailles):
-            with open('ex' + str(j) + '_' + str(i), 'w') as inst:
+            os.makedirs('testset/' + str(j) + '/', exist_ok=True)
+            with open('testset/' + str(j) + '/' + str(i), 'w') as inst:
                 inst.write("%d\n" % j)
                 for k in range(2**j):
                     for l in range((2**j)-1):
