@@ -1,6 +1,7 @@
 import argparse
 import numpy as np
 from time import perf_counter
+import algo_tp1 as algo
 
 SECOND_TO_MS = 1000
 
@@ -28,7 +29,8 @@ if __name__ == '__main__':
     
 
     start_time = perf_counter()
-    result = np.ones((size1, size2), dtype=int)
+    if args.a == "conv":
+        result = algo.conv(array1, array2, size1)
     end_time = perf_counter()
 
     if args.p:
