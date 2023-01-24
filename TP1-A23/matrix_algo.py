@@ -1,6 +1,7 @@
 import argparse
 import numpy as np
 from time import perf_counter
+import algo_tp1 as algo
 
 SECOND_TO_MS = 1000
 
@@ -20,15 +21,20 @@ if __name__ == '__main__':
         args.t = True
 
     with open(args.e1, 'r') as f:
-        size1 = int(f.readline())
+        size1 = 2**int(f.readline())
         array1 = np.loadtxt(f, dtype=int)
     with open(args.e2, 'r') as f:
-        size2 = int(f.readline())
+        size2 = 2**int(f.readline())
         array2 = np.loadtxt(f, dtype=int)
     
 
     start_time = perf_counter()
-    result = np.ones((size1, size2), dtype=int)
+    if args.a == "conv":
+        result = algo.conv(array1, array2, size1)
+    elif args.a == "strassen":
+        result = algo.strassen(array1, array2, size1)
+    elif args.a == "strassenSeuil":
+        result = algo.strassenSeuil(array1, array2, size1)
     end_time = perf_counter()
 
     if args.p:
