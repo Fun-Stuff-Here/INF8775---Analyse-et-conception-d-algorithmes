@@ -2,12 +2,17 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats
+import numpy as np
 
 def plot_test_puissance():
     df = pd.read_csv('results.csv').groupby(['algo','size']).mean().reset_index()
     df['size'] = 2**df['size']
     df.to_csv('results_with_means.csv', index=False)
     g = sns.FacetGrid(df, hue='algo',  aspect=1)
+    for algo in df['algo'].unique():
+        slope, intercept, r_value, p_value, std_err = stats.linregress( np.log(df[df['algo']==algo]['size']),np.log(df[df['algo']==algo]['temps']))
+        print(f"Temps = {slope} * Fn + {intercept} pour l'algorithme {algo}")
+
     g = g.map(plt.plot, 'size', 'temps')
     g.set(xscale='log')
     g.set(yscale='log')
@@ -18,7 +23,7 @@ def plot_test_puissance():
 def plot_test_rapport():
     df = pd.read_csv('results.csv').groupby(['algo','size']).mean().reset_index()
     df['size'] = 2**df['size']
-    df['rapport'] = df['temps']/df['size']**3
+    df['rapport'] = df['temps']/df['size']**2.59
     g2 = sns.lineplot(df, x="size", y="rapport", hue='algo')
     for algo in df['algo'].unique():
         last_point = df[df['algo']==algo].tail(1)['rapport'].values[0]
