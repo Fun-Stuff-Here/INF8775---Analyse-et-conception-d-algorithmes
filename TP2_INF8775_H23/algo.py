@@ -19,22 +19,25 @@ if __name__ == '__main__':
     if args.t is None:
         args.t = True
 
-    # TODO: read the file
+    towns = dict()
+    size = 0
     with open(args.e, 'r') as f:
-        pass
+        size = int(f.readline())
+        for i in range(size):
+            towns[i] = tuple([int(coord) for coord in f.readline().split()])
 
     start_time = perf_counter()
     if args.a == "glouton":
-        result = algo.glouton()
+        result = algo.glouton(size, towns)
     elif args.a == "progdyn":
-        result = algo.progdyn()
+        result = algo.progdyn(size, towns)
     elif args.a == "approx":
-        result = algo.approx()
+        result = algo.approx(size, towns)
     end_time = perf_counter()
 
-    # TODO: print the result
     if args.p:
-        pass
+        for townIndex in result:
+            print(townIndex)
 
     if args.t:
         print(str(SECOND_TO_MS*(end_time - start_time)))
