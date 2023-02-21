@@ -12,12 +12,15 @@ if __name__ == '__main__':
     parser.add_argument("-e", dest="e", type=str, help="e: Path to the exemple")
     parser.add_argument("-p", dest="p", type=bool, help="p: print the matrix", default=False, nargs='?')
     parser.add_argument("-t", dest="t", type=bool, help="t: print the time", default=False, nargs='?')
+    parser.add_argument("-d", dest="d", type=bool, help="d: print the distance", default=False, nargs='?')
     args = parser.parse_args()
 
     if args.p is None:
         args.p = True
     if args.t is None:
         args.t = True
+    if args.d is None:
+        args.d = True
 
     towns = dict()
     size = 0
@@ -34,6 +37,17 @@ if __name__ == '__main__':
     elif args.a == "approx":
         result = algo.approx(size, towns)
     end_time = perf_counter()
+
+    result.append(result[0])
+    if result[1] > result[-2]:
+        result.reverse()
+
+
+    if args.d:
+        distance = 0
+        for i in range(size):
+            distance += algo.euclidean_distance(towns[result[i]], towns[result[i+1]])
+        print(str(distance))
 
     if args.p:
         for townIndex in result:

@@ -22,6 +22,10 @@ while [[ $# -gt 0 ]]; do
     SHOW_TIME_FLAG='-t'
     shift # past argument
     ;;
+    -d|--showdistance)
+    SHOW_TIME_FLAG='-d'
+    shift # past argument
+    ;;
     -*|--*)
       echo "Unknown option $1"
       exit 1
@@ -30,4 +34,4 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-python3 algo.py -a $ALGO -e $PATH_TO_EX $PRINT_FLAG $SHOW_TIME_FLAG
+python3 algo.py -a $ALGO -e $PATH_TO_EX $PRINT_FLAG $SHOW_TIME_FLAG $SHOW_DISTANCE_FLAG
