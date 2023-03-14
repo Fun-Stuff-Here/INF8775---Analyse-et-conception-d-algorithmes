@@ -1,3 +1,5 @@
+import numpy as np
+
 # source : https://stackoverflow.com/questions/1482308/how-to-get-all-subsets-of-a-set-powerset
 def powerset(seq):
     """
@@ -76,5 +78,65 @@ def progdyn(size:int, towns:dict):
     result.reverse()
     return result
 
+#source : https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/
+# Prim's Minimum Spanning Tree (MST) algorithm.
+import sys
+
+class Graph():
+    def __init__(self, vertices, towns:dict):
+        self.V = vertices
+        self.nodes = {}
+        self.towns = towns
+
+    def printMST(self, parent):
+        for i in range(1, self.V):
+            if parent[i] not in self.nodes:
+                self.nodes[parent[i]] = []
+            self.nodes[parent[i]].append({"child":i, "weight":euclidean_distance(self.towns[i], self.towns[parent[i]])})
+        
+        stack = [0]
+        result = []
+        while len(stack) > 0:
+            current = stack.pop()
+            result.append(current)
+            if current in self.nodes:
+                for child in self.nodes[current]:
+                    stack.append(child["child"])
+        return result
+
+    def minKey(self, key, mstSet):
+
+        # Initialize min value
+        min = sys.maxsize
+
+        for v in range(self.V):
+            if key[v] < min and mstSet[v] == False:
+                min = key[v]
+                min_index = v
+
+        return min_index
+
+
+    def primMST(self):
+
+        key = [sys.maxsize] * self.V
+        parent = [None] * self.V
+        key[0] = 0
+        mstSet = [False] * self.V
+        parent[0] = -1
+        for cout in range(self.V):
+            u = self.minKey(key, mstSet)
+            mstSet[u] = True
+            for v in range(self.V):
+                uv_distance = euclidean_distance(self.towns[u], self.towns[v])
+                if uv_distance > 0 and mstSet[v] == False \
+                and key[v] > uv_distance:
+                    key[v] = uv_distance
+                    parent[v] = u
+
+        return self.printMST(parent)
+
 def approx(size:int, towns:dict):
-    return [0, 1, 4, 3, 2, 0]
+    g = Graph(size, towns)
+    return g.primMST()
+
