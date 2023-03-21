@@ -6,7 +6,6 @@ import numpy as np
 
 def plot_test_puissance():
     df = pd.read_csv('results.csv').groupby(['algo','size']).mean().reset_index()
-    df['size'] = 2**df['size']
     df.to_csv('results_with_means.csv', index=False)
     g = sns.FacetGrid(df, hue='algo',  aspect=1)
     for algo in df['algo'].unique():
@@ -56,5 +55,5 @@ def plot_test_constante():
         plt.close()
 
 plot_test_puissance()
-plot_test_rapport()
-plot_test_constante()
+# plot_test_rapport()
+# plot_test_constante()
