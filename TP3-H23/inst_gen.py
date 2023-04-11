@@ -73,19 +73,43 @@ if __name__ == "__main__":
 
 
 
+    with open(args.prefixe + '_n' + str(args.nb_enclos) + '_m' +  str(args.taille_s) + ".txt",'w') as inst:
+        inst.write("n=%d;\n m=%d\n k=%d\n" % (args.nb_enclos, args.taille_s, max_dist))
+
+        inst.write("index_bonus=[")
+        for i in range(args.taille_s-1):
+            inst.write("%d, " % theme[i])
+        inst.write("%d]\n" % theme[-1])
+
+        inst.write("size_enclos=[")
+        for i in range(args.nb_enclos-1):
+            inst.write("%d, " % tailles[i])
+        inst.write("%d]\n" % tailles[-1])
+
+        inst.write("edge_weight=[")
+        for i in range(args.nb_enclos):
+            inst.write("|")
+            for j in range(args.nb_enclos-1):
+                inst.write("%d, " % poids[i][j])
+            if i != args.nbenclos:
+                inst.write("%d\n|" % poids[i][-1])
+            else:
+                inst.write("%d|" % poids[i][-1])
+        inst.write("];\n")
 
     # Write
-    with open(args.prefixe + '_n' + str(args.nb_enclos) + '_m' +  str(args.taille_s) + ".txt",'w') as inst:
-        inst.write("%d %d %d\n" % (args.nb_enclos, args.taille_s, max_dist))
+    #with open(args.prefixe + '_n' + str(args.nb_enclos) + '_m' +  str(args.taille_s) + ".txt",'w') as inst:
+    #    inst.write("%d %d %d\n" % (args.nb_enclos, args.taille_s, max_dist))
 
-        for i in range(args.taille_s-1):
-            inst.write("%d " % theme[i])
-        inst.write("%d\n" % theme[-1])
+    #    for i in range(args.taille_s-1):
+    #        inst.write("%d " % theme[i])
+    #    inst.write("%d\n" % theme[-1])
 
-        for i in range(args.nb_enclos):
-            inst.write("%d\n" % tailles[i])
+    #    for i in range(args.nb_enclos):
+    #        inst.write("%d\n" % tailles[i])
 
-        for i in range(args.nb_enclos):
-            for j in range(args.nb_enclos-1):
-                inst.write("%d " % poids[i][j])
-            inst.write("%d\n" % poids[i][-1])
+    #    for i in range(args.nb_enclos):
+    #        for j in range(args.nb_enclos-1):
+    #            inst.write("%d " % poids[i][j])
+    #       inst.write("%d\n" % poids[i][-1])
+
