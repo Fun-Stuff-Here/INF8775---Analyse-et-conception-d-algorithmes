@@ -1,7 +1,7 @@
 import minizinc
 
 # Create a MiniZinc model
-Driver = minizinc.Driver.find(["/minizinc/bin"])
+Driver = minizinc.Driver.find(["./minizinc/minizinc.exe"])
 model = minizinc.Model()
 model.add_string("""
 var -100..100: x;
@@ -12,7 +12,7 @@ solve satisfy;
 
 # Transform Model into a instance
 gecode = minizinc.Solver.lookup("gecode")
-inst = minizinc.Instance(gecode, model, driver=Driver)
+inst = minizinc.Instance(gecode, model)
 inst["a"] = 1
 inst["b"] = 4
 inst["c"] = 0

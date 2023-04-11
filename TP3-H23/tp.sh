@@ -1,5 +1,8 @@
 #!/bin/bash
 
+source 'evalfile.sh'
+echo $PATH
+
 pip3 install minizinc
 pip3 install minizinc[dzn]
 
@@ -24,4 +27,4 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-python3 test.py -e $PATH_TO_EX $PRINT_FLAG
+python test.py -e $PATH_TO_EX $PRINT_FLAG
