@@ -1,9 +1,4 @@
-source 'evalfile.sh'
-echo $PATH
-
-pip3 install minizinc
-pip3 install minizinc[dzn]
-
+#!/bin/bash
 POSITIONAL_ARGS=()
 
 while [[ $# -gt 0 ]]; do
@@ -25,4 +20,5 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-python3 test.py -e $PATH_TO_EX $PRINT_FLAG
+
+python3 parsing.py -e $PATH_TO_EX $PRINT_FLAG

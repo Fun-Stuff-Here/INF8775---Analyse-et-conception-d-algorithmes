@@ -15,7 +15,7 @@
 #     $ ./inst_gen.py -n NB_ENCLOS -m TAILLE-S [-x PRÉFIXE]
 #
 #     où :
-#       * NB_BATIMENTS est la taille du problème et 
+#       * NB_BATIMENTS est la taille du problème et
 #       * NB_EXEMPLAIRES est le nombre d'exemplaires différents requis (par défaut 1).
 #
 #     Il est nécessaire de rendre ce script exécutable en utilisant chmod +x
@@ -29,34 +29,54 @@ import numpy as np
 if __name__ == "__main__":
     # Parse arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("-n", "--nb-enclos", \
-                        help="Représente la taille du graphe à générer", \
-                        action='store', required=True, metavar='NB_ENCLOS', type=int)
-    parser.add_argument("-m", "--taille-s", \
-                        help="Représente la taille du sous-ensemble d'enclos à placer à proximité", \
-                        action='store', required=False, metavar='TAILLE_MAX', type=int)
-    parser.add_argument("-x", "--prefixe", \
-                        help="Ajouter le préfixe indiqué aux noms des fichiers", \
-                        action='store', required=False, metavar='PREFIXE', type=str)
+    parser.add_argument(
+        "-n",
+        "--nb-enclos",
+        help="Représente la taille du graphe à générer",
+        action="store",
+        required=True,
+        metavar="NB_ENCLOS",
+        type=int,
+    )
+    parser.add_argument(
+        "-m",
+        "--taille-s",
+        help="Représente la taille du sous-ensemble d'enclos à placer à proximité",
+        action="store",
+        required=False,
+        metavar="TAILLE_MAX",
+        type=int,
+    )
+    parser.add_argument(
+        "-x",
+        "--prefixe",
+        help="Ajouter le préfixe indiqué aux noms des fichiers",
+        action="store",
+        required=False,
+        metavar="PREFIXE",
+        type=str,
+    )
 
     args = parser.parse_args()
     if not args.prefixe:
-        args.prefixe = 'ex'
+        args.prefixe = "ex"
     else:
-        args.prefixe = args.prefixe + '_'
+        args.prefixe = args.prefixe + "_"
     if args.taille_s > args.nb_enclos:
-        print(f"La taille du sous-ensemble donnée est supérieure au nombre d'enclos, elle a été fixée à {args.nb_enclos}")
+        print(
+            f"La taille du sous-ensemble donnée est supérieure au nombre d'enclos, elle a été fixée à {args.nb_enclos}"
+        )
         args.taille_s = args.nb_enclos
 
     # Parameters
     max_weight = 100
 
-    #initialize
+    # initialize
     tailles = []
     poids = []
     theme = []
 
-    #generate data
+    # generate data
     for i in range(args.nb_enclos):
         tailles.append(random.randint(2, 20))
 
@@ -68,48 +88,23 @@ if __name__ == "__main__":
 
         poids.append(poids_i)
 
-    max_dist = np.ceil(np.sqrt(args.taille_s*11)*2)-10
-    theme = random.sample(range(args.nb_enclos),k=args.taille_s)
+    max_dist = np.ceil(np.sqrt(args.taille_s * 11) * 2) - 10
+    theme = random.sample(range(args.nb_enclos), k=args.taille_s)
 
+    with open(
+        args.prefixe + "_n" + str(args.nb_enclos) + "_m" + str(args.taille_s) + ".txt",
+        "w",
+    ) as inst:
+        inst.write("%d %d %d\n" % (args.nb_enclos, args.taille_s, max_dist))
 
+        for i in range(args.taille_s - 1):
+            inst.write("%d " % theme[i])
+        inst.write("%d\n" % theme[-1])
 
-    with open(args.prefixe + '_n' + str(args.nb_enclos) + '_m' +  str(args.taille_s) + ".txt",'w') as inst:
-        inst.write("n=%d;\n m=%d\n k=%d\n" % (args.nb_enclos, args.taille_s, max_dist))
-
-        inst.write("index_bonus=[")
-        for i in range(args.taille_s-1):
-            inst.write("%d, " % theme[i])
-        inst.write("%d]\n" % theme[-1])
-
-        inst.write("size_enclos=[")
-        for i in range(args.nb_enclos-1):
-            inst.write("%d, " % tailles[i])
-        inst.write("%d]\n" % tailles[-1])
-
-        inst.write("edge_weight=[")
         for i in range(args.nb_enclos):
-            inst.write("|")
-            for j in range(args.nb_enclos-1):
-                inst.write("%d, " % poids[i][j])
-            if i != args.nbenclos:
-                inst.write("%d\n|" % poids[i][-1])
-            else:
-                inst.write("%d|" % poids[i][-1])
-        inst.write("];\n")
+            inst.write("%d\n" % tailles[i])
 
-    # Write
-    #with open(args.prefixe + '_n' + str(args.nb_enclos) + '_m' +  str(args.taille_s) + ".txt",'w') as inst:
-    #    inst.write("%d %d %d\n" % (args.nb_enclos, args.taille_s, max_dist))
-
-    #    for i in range(args.taille_s-1):
-    #        inst.write("%d " % theme[i])
-    #    inst.write("%d\n" % theme[-1])
-
-    #    for i in range(args.nb_enclos):
-    #        inst.write("%d\n" % tailles[i])
-
-    #    for i in range(args.nb_enclos):
-    #        for j in range(args.nb_enclos-1):
-    #            inst.write("%d " % poids[i][j])
-    #       inst.write("%d\n" % poids[i][-1])
-
+        for i in range(args.nb_enclos):
+            for j in range(args.nb_enclos - 1):
+                inst.write("%d " % poids[i][j])
+            inst.write("%d\n" % poids[i][-1])
