@@ -1,5 +1,3 @@
-#!/bin/bash
-
 source 'evalfile.sh'
 echo $PATH
 
@@ -27,4 +25,4 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-python test.py -e $PATH_TO_EX $PRINT_FLAG
+python3 test.py -e $PATH_TO_EX $PRINT_FLAG
