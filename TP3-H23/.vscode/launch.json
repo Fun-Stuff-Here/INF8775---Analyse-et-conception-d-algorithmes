@@ -8,7 +8,7 @@
             "program": "parsing.py",
             "args": [
                 "-e",
-                "n100_m50_V-8613404.txt",
+                "ex_n10_m5.txt",
                 "-p"
             ],
             "console": "integratedTerminal",

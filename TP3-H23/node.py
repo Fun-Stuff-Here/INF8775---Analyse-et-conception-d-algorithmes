@@ -37,22 +37,16 @@ class TreeNode:
         return zoo_filled
 
     def fill(self, zoo: np.array, direction: Direction) -> np.array:
-        try:
-            position = (
-                np.array([zoo.shape[0] // 2, zoo.shape[1] // 2])
-                if self.parent is None
-                else copy.deepcopy(self.parent.position)
-            )
+        position = (
+            np.array([zoo.shape[0] // 2, zoo.shape[1] // 2])
+            if self.parent is None
+            else copy.deepcopy(self.parent.position)
+        )
 
-            while zoo[position[0], position[1]] != -1:
-                position += direction
-            zoo[position[0], position[1]] = self.encloser.encloser_number
-            self.position = position
-        except Exception as e:
-            from heatmap import heatmap2d
-
-            heatmap2d(zoo)
-            exit(-1)
+        while zoo[position[0], position[1]] != -1:
+            position += direction
+        zoo[position[0], position[1]] = self.encloser.encloser_number
+        self.position = position
 
         return zoo
 
@@ -61,8 +55,7 @@ class TreeNode:
         if n_child == 0:
             return []
 
-        buckets = [list()] * n_buckets
-
+        buckets = [list() for _ in range(n_buckets)]
         for i, child in enumerate(self.children):
             buckets[i % n_buckets].append(child)
 
