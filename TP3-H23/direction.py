@@ -1,7 +1,9 @@
 import numpy as np
 
+
 class Direction:
     pass
+
 
 class Direction:
     NORTH = np.array([0, 1])
@@ -14,19 +16,12 @@ class Direction:
     SOUTH_EAST = np.array([1, -1])
 
     VALUES = [
-        np.array([0, 1]),
-        np.array([-1, 1]),
-        np.array([1, 1]),
-        np.array([-1, 0]),
-        np.array([1, 0]),
-        np.array([0, -1]),
-        np.array([-1, -1]),
-        np.array([1, -1]),
+        NORTH,
+        NORTH_WEST,
+        NORTH_EAST,
+        WEST,
+        EAST,
+        SOUTH,
+        SOUTH_WEST,
+        SOUTH_EAST,
     ]
-
-    def __init__(self, direction: np.array) -> None:
-        self.vector = direction
-
-    def reverse(self) -> Direction:
-        return Direction(self.vector*-1)
-    

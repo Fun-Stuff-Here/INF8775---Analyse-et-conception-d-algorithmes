@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug solve",
+            "type": "python",
+            "request": "launch",
+            "program": "parsing.py",
+            "args": [
+                "-e",
+                "n100_m50_V-8613404.txt",
+                "-p"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}

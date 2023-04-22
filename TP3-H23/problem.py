@@ -17,12 +17,12 @@ class Problem:
         size_encloser: np.array,
         edge_matrix: np.array,
     ) -> None:
-        self.n = n
-        self.m = m
-        self.k = k
-        self.index_bonus = index_bonus
-        self.size_encloser = size_encloser
-        self.edge_matrix = self.edge_matrix_sym(edge_matrix)
+        self.n: int = n
+        self.m: int = m
+        self.k: int = k
+        self.index_bonus: np.array = index_bonus
+        self.size_encloser: np.array = size_encloser
+        self.edge_matrix: np.array = self.edge_matrix_sym(edge_matrix)
 
     def edge_matrix_sym(self, edge_matrix: np.array) -> np.array:
         for i in range(self.n):

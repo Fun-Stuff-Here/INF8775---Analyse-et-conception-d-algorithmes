@@ -3,33 +3,43 @@
 import sys
 import numpy as np
 from problem import Problem
+from node import TreeNode
+from encloser import Encloser
 
 
 class Graph:
     def __init__(self, problem: Problem):
-        self.V = problem.edge_matrix.shape[0]
+        self.V = problem.n
         self.nodes = {}
         self.problem = problem
 
-    def printMST(self, parent: list) -> np.array:
-        for i in range(1, self.V):
-            if parent[i] not in self.nodes:
-                self.nodes[parent[i]] = []
-            self.nodes[parent[i]].append(
-                {
-                    "child": i,
-                }
-            )
+    def get_children(self, parent_index: int, parent: list) -> list:
+        children = []
+        for i in range(self.V):
+            if parent[i] == parent_index:
+                children.append(i)
+        return children
 
-        stack = [0]
-        result = []
-        while len(stack) > 0:
-            current = stack.pop()
-            result.append(current)
-            if current in self.nodes:
-                for child in self.nodes[current]:
-                    stack.append(child["child"])
-        return result
+    def printMST(self, parent: list) -> TreeNode:
+        nodes = [
+            TreeNode(
+                encloser=Encloser(i, self.problem.size_encloser[i]),
+                children=[],
+                parent=None,
+            )
+            for i in range(self.V)
+        ]
+
+        for node_index in range(self.V):
+            nodes[node_index].parent = (
+                nodes[parent[node_index]] if parent[node_index] != -1 else None
+            )
+            children_indexes = self.get_children(node_index, parent)
+            nodes[node_index].children = [
+                nodes[child_index] for child_index in children_indexes
+            ]
+
+        return nodes[0]
 
     def minKey(self, key: int, mstSet: np.array):
         # Initialize min value
@@ -42,7 +52,7 @@ class Graph:
 
         return min_index
 
-    def primMST(self) -> np.array:
+    def primMST(self) -> TreeNode:
         key = [sys.maxsize] * self.V
         parent = [None] * self.V
         key[0] = 0
@@ -60,6 +70,6 @@ class Graph:
         return self.printMST(parent)
 
 
-def get_filling_order(problem: Problem) -> np.array:
+def get_root_tree(problem: Problem) -> np.array:
     g = Graph(problem)
     return g.primMST()
