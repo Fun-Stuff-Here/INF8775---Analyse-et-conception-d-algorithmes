@@ -37,7 +37,15 @@ if __name__ == "__main__":
     for i, solution in enumerate(solve(problem)):
         # TODO : afficher le zoo avec l'attrait de chaque enclos
         final_solution = solution
+        enclos: dict = dict()
+        for index in np.ndindex(solution.zoo.shape):
+            if solution.zoo[index] == -1:
+                continue
+            if solution.zoo[index] not in enclos:
+                enclos[solution.zoo[index]] = []
+            enclos[solution.zoo[index]].append(index)
         if args.p:
-            print(
-                f"{i} : solution {solution.zoo} with attraction {solution.attraction}"
-            )
+            for i in range(problem.n):
+                print(" ".join([f"{str(x)} {str(y)}" for x, y in enclos[i]]))
+        else:
+            print(f"{solution.attraction}")

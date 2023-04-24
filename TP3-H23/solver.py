@@ -21,7 +21,6 @@ class Solver:
         self.max_size = int(max_size)
 
     def solve(self) -> Solution:
-        start = perf_counter()
         root: TreeNode = get_root_tree(self.problem)
         zoo_shape = (4 * self.problem.n, 4 * self.problem.n)
         self.zoo = -1 * np.ones(shape=zoo_shape, dtype=int)
@@ -29,8 +28,8 @@ class Solver:
         self.zoo = root.fill_children(self.zoo, Direction.NORTH)
         self.zoo = self.shrink_zoo()
         self.zoo = self.fill_zoo_with_encloser()
-        self.zoo = self.squash(0)
-        self.zoo = self.squash(1)
+        self.zoo = self.squash(axis=0)
+        self.zoo = self.squash(axis=1)
         self.zoo = self.shrink_zoo()
 
         middle = np.array([self.zoo.shape[0] // 2, self.zoo.shape[1] // 2])
@@ -42,11 +41,11 @@ class Solver:
         ]:
             index = middle[0] + direction[0], middle[1] + direction[1]
             self.zoo = self.gravity_pull_towards_center(index)
+            self.zoo = self.squash(axis=1)
+            self.zoo = self.squash(axis=0)
 
-        end = perf_counter()
-        print(f"Time: {end - start} s")
+        self.zoo = self.shrink_zoo()
 
-        heatmap2d(self.zoo)
         yield Solution(self.zoo, 0)
 
     def squash(self, axis: int) -> np.array:
