@@ -2,6 +2,12 @@ import argparse
 import numpy as np
 from problem import Problem, Solution
 from solver import solve
+from itertools import combinations
+import time
+
+
+def distance(x1, y1, x2, y2):
+    return abs(x2 - x1) + abs(y2 - y1)
 
 
 def parse_file(file_name: str) -> Problem:
@@ -48,4 +54,35 @@ if __name__ == "__main__":
             for i in range(problem.n):
                 print(" ".join([f"{str(x)} {str(y)}" for x, y in enclos[i]]))
         else:
-            print(f"{solution.attraction}")
+            # Évaluation de la solution
+            # somme de tous les poids
+            sol = [enclos[i] for i in range(problem.n)]
+            poids = problem.edge_matrix
+            theme = problem.index_bonus
+            m = problem.m
+            k = problem.k
+            n = problem.n
+            distances = [[9999 for _ in sol] for _ in sol]
+            combs_enclos = combinations(range(len(sol)), 2)
+            for paire in combs_enclos:
+                for start in sol[paire[0]]:
+                    for end in sol[paire[1]]:
+                        lenght = distance(start[0], start[1], end[0], end[1])
+                        if lenght < distances[paire[0]][paire[1]]:
+                            distances[paire[0]][paire[1]] = lenght
+                            distances[paire[1]][paire[0]] = lenght
+
+            somme = 0
+            for i, _ in enumerate(sol):
+                for j, _ in enumerate(sol):
+                    somme += poids[i][j] * distances[i][j]
+
+            # vérifier la contrainte de distance
+            combs_theme = combinations(theme, 2)
+            bonus = m**2
+            for paire in combs_theme:
+                if distances[paire[0]][paire[1]] > k:
+                    bonus = 0
+                    break
+            print(f"{bonus - somme}")
+    time.sleep(120)  # to satisfy that the program needs to be interrupted manually
