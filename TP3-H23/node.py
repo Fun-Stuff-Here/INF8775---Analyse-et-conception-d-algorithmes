@@ -1,5 +1,6 @@
 import numpy as np
 import copy
+import random
 from encloser import Encloser
 from direction import Direction
 from typing import Optional, List
@@ -63,6 +64,7 @@ class TreeNode:
 
     def children_directions(self, direction: Direction) -> List[Direction]:
         directions = copy.deepcopy(Direction.VALUES)
+        random.shuffle(directions)
         if self.parent is None:
             return directions
 

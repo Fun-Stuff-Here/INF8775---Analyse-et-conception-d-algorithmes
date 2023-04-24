@@ -1,12 +1,13 @@
 from typing import Tuple, Optional
 from direction import Direction
+from functools import lru_cache
 import numpy as np
 
 
 def neighbor_indexes(
     index: Tuple[int, int], zoo_corners: Tuple[int, int, int, int]
 ) -> Tuple[int, int]:
-    min_y, max_y, min_x, max_x = zoo_corners
+    min_x, max_x, min_y, max_y = zoo_corners
 
     for direction in [Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST]:
         i, j = index + direction

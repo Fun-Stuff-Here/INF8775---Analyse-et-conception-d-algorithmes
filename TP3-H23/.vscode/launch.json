@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug solve",
+            "name": "Debug solve - 10",
             "type": "python",
             "request": "launch",
             "program": "parsing.py",
@@ -13,6 +13,32 @@
             ],
             "console": "integratedTerminal",
             "justMyCode": true
-        }
+        },
+        {
+            "name": "Debug solve - 100",
+            "type": "python",
+            "request": "launch",
+            "program": "parsing.py",
+            "args": [
+                "-e",
+                "n100_m50_V-8613404.txt",
+                "-p"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Debug solve - 1000",
+            "type": "python",
+            "request": "launch",
+            "program": "parsing.py",
+            "args": [
+                "-e",
+                "n1000_m500_V-8435325196.txt",
+                "-p"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
     ]
 }
