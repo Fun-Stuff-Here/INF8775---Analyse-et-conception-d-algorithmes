@@ -41,7 +41,6 @@ if __name__ == "__main__":
     final_solution: Solution = Solution(np.array([]), 0)
 
     for i, solution in enumerate(solve(problem)):
-        # TODO : afficher le zoo avec l'attrait de chaque enclos
         final_solution = solution
         enclos: dict = dict()
         for index in np.ndindex(solution.zoo.shape):
